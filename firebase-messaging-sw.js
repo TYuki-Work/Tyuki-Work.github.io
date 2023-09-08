@@ -24,7 +24,10 @@
  const messaging = firebase.messaging();
 
 
-
+messaging.onMessage((payload) => {
+  console.log('Message received. ', payload);
+  // ...
+});
 // If you would like to customize notifications that are received in the
 // background (Web app is closed or not in browser focus) then you should
 // implement this optional method.
