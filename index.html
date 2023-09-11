@@ -102,6 +102,18 @@ firebase.initializeApp({
   //   `messaging.onBackgroundMessage` handler.
   messaging.onMessage((payload) => {
     console.log('Message received. ', payload);
+
+    const title = 'プッシュ通知のテスト';
+
+    const options = {
+      body: 'body', // サーバーからのメッセージ
+      tag: title, // タイトル
+      icon: '/firebase-logo.png', // アイコン
+      badge: '/firebase-logo.png' // アイコン
+    };
+
+  self.registration.showNotification(title, options);
+
     // Update the UI to include the received message.
     appendMessage(payload);
   });

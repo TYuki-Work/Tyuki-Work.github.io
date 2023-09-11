@@ -23,23 +23,6 @@ firebase.initializeApp({
  // messages.
 const messaging = firebase.messaging();
 
-
-messaging.onMessage((payload) => {
-
-  const title = 'プッシュ通知のテスト';
-
-  const options = {
-    body: 'body', // サーバーからのメッセージ
-    tag: title, // タイトル
-    icon: '/firebase-logo.png', // アイコン
-    badge: '/firebase-logo.png' // アイコン
-  };
-
-    self.registration.showNotification(title, options);
-});
-
-
-
 messaging.onBackgroundMessage(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   // Customize notification here
