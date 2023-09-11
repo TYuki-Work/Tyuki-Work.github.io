@@ -100,11 +100,11 @@ firebase.initializeApp({
   // - a message is received while the app has focus
   // - the user clicks on an app notification created by a service worker
   //   `messaging.onBackgroundMessage` handler.
-  messaging.onMessage((payload) => {
+  messaging.onMessage(function(payload){
+
     console.log('Message received. ', payload);
 
     const title = 'プッシュ通知のテスト';
-
     const options = {
       body: 'body', // サーバーからのメッセージ
       tag: title, // タイトル
@@ -112,7 +112,7 @@ firebase.initializeApp({
       badge: '/firebase-logo.png' // アイコン
     };
 
-  self.registration.showNotification(title, options);
+    self.registration.showNotification(title, options);
 
     // Update the UI to include the received message.
     appendMessage(payload);
