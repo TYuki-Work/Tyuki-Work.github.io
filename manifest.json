@@ -2,7 +2,7 @@
     "name": "push_notification",
     "short_name": "push_notification",
     "icons": [{
-    "src": "firebase.logo.png",
+    "src": "firebase-logo.png",
     "sizes": "192x192",
     "type": "image/png"
     }],
