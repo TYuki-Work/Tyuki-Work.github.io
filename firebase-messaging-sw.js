@@ -26,7 +26,7 @@ const messaging = firebase.messaging();
 self.addEventListener('push', function (event) {
   const title = 'プッシュ通知のテスト';
   const options = {
-    body: event.data.text(), // サーバーからのメッセージ
+    body: event.notification.body.text(), // サーバーからのメッセージ
     tag: title, // タイトル
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
