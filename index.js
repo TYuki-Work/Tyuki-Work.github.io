@@ -20,6 +20,7 @@ const vapidKey = {vapidKey: "BELZS0sFRLC7RTxEOxSM2Z9ta44mkgIz0c0RVRNQQHk3mmMmNB2
 // 通知の許可 -> デバイストークンの取得
 Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
+        showToken('loading...');
         getToken(messaging, vapidKey).then(async (currentToken) => {
             console.log(currentToken); // currentTokenがデバイスのトークンとなり、これは適宜データベースに保存して使用する。
         })
