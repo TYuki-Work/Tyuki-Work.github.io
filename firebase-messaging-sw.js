@@ -23,11 +23,23 @@ firebase.initializeApp({
  // messages.
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  const notificationTitle = 'Background Message Title';
+self.addEventListener('push', function (event) {
+  const title = 'プッシュ通知のテスト';
+  const options = {
+    body: event.data.text(), // サーバーからのメッセージ
+    tag: title, // タイトル
+    icon: '/firebase-logo.png', // アイコン
+    badge: '/firebase-logo.png' // アイコン
+  };
 
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+
+messaging.onBackgroundMessage(function(payload){
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+
+  const notificationTitle = 'Background Message Title';
   const notificationOptions = {
     body: 'Background Message',
     icon: '/firebase-logo.png'
