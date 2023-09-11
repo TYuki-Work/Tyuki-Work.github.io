@@ -26,22 +26,16 @@ const messaging = firebase.messaging();
 
 messaging.onMessage((payload) => {
 
-  console.log('Message received. ', payload);
+  const title = 'プッシュ通知のテスト';
 
-  self.addEventListener('push', function (event) {
-    const title = 'プッシュ通知のテスト';
+  const options = {
+    body: 'body', // サーバーからのメッセージ
+    tag: title, // タイトル
+    icon: '/firebase-logo.png', // アイコン
+    badge: '/firebase-logo.png' // アイコン
+  };
 
-    const options = {
-      body: event.data.text(), // サーバーからのメッセージ
-      tag: title, // タイトル
-      icon: '/firebase-logo.png', // アイコン
-      badge: '/firebase-logo.png' // アイコン
-    };
-
-    event.waitUntil(self.registration.showNotification(title, options));
-  });
-
-  // プッシュ通知をクリックしたときのイベント
+    self.registration.showNotification(title, options);
 });
 
 
@@ -52,7 +46,7 @@ messaging.onBackgroundMessage(function(payload) {
   const notificationTitle = 'Background Message Title';
 
   const notificationOptions = {
-    body: 'Background Message body.',
+    body: 'Background Message',
     icon: '/firebase-logo.png'
   };
 
