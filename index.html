@@ -202,6 +202,8 @@ firebase.initializeApp({
           if (permission === 'granted') {
             console.log('Notification permission granted.');
             resetUI();
+          }else {
+            console.log('Unable to get permission to notify.');
           }
         });
       } else {
