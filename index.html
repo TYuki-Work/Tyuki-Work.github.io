@@ -186,7 +186,7 @@ firebase.initializeApp({
       console.log("This browser does not support notifications.");
     } else {
       if (checkNotificationPromise()) {
-        Notification.requestPermission().then((permission) => {
+        Notification.requestPermission(function(permission){
           if (permission === 'granted') {
             console.log('Notification permission granted.');
             resetUI();
@@ -194,7 +194,7 @@ firebase.initializeApp({
           }else {
             console.log('Unable to get permission to notify.');
             testMessage("not safari NG")
-         }
+          }
         });
       } else {
         Notification.requestPermission(function (permission) {
