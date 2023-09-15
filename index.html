@@ -214,8 +214,9 @@ firebase.initializeApp({
   // requestPermission() プロミスの機能検出
   function checkNotificationPromise() {
     try {
-      Notification.requestPermission().then();
+      Notification.requestPermission().then((permission)=>{});
     } catch (e) {
+      testMessage("checkPermission NG")
       return false;
     }
     return true;
