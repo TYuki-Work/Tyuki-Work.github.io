@@ -62,6 +62,7 @@ limitations under the License.
           </div>
           <!-- div to display messages received by this app. -->
           <div id="messages"></div>
+          <div id="test_call"></div>
         </div>
       </div>
 
@@ -208,19 +209,25 @@ firebase.initializeApp({
         });
       } else {
         Notification.requestPermission(function (permission) {
-          resetUI();
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+            resetUI();
+          }else {
+            console.log('Unable to get permission to notify.');
+            testMessage();
+          }
         });
       }
     }
   }
 
+  // requestPermission() プロミスの機能検出
   function checkNotificationPromise() {
     try {
       Notification.requestPermission().then();
     } catch (e) {
       return false;
     }
-
     return true;
   }
 
@@ -254,6 +261,15 @@ firebase.initializeApp({
     dataElement.textContent = JSON.stringify(payload, null, 2);
     messagesElement.appendChild(dataHeaderElement);
     messagesElement.appendChild(dataElement);
+  }
+
+  // test メッセージ表示用
+  function testMessage() {
+    const testMessagesElement = document.querySelector('#test_call');
+    const testDataElement = document.createElement('pre');
+    testDataElement.style = 'overflow-x:hidden;';
+    testDataElement.textContent = "だめですね";
+    testMessagesElement.appendChild(testDataElement);
   }
 
 
