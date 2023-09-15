@@ -58,7 +58,7 @@ limitations under the License.
             <h4>Needs Permission</h4>
             <p id="token"></p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                    onclick="requestPermission()">Request Permission</button>
+                    onclick="askNotificationPermission()">Request Permission</button>
           </div>
           <!-- div to display messages received by this app. -->
           <div id="messages"></div>
@@ -69,15 +69,12 @@ limitations under the License.
   </main>
 </div>
 
-<!-- Import and configure the Firebase SDK -->
-<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
 <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compat.js"></script>
 
 
 <script>
-
+//初期化
 firebase.initializeApp({
     apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
     authDomain: 'pushtest01-ded5f.firebaseapp.com',
@@ -89,28 +86,30 @@ firebase.initializeApp({
     measurementId: 'G-0CLQF7L3E2',
  });
 
-  // Retrieve Firebase Messaging object.
+
+  // Firebase Messaging object を取得.
   const messaging = firebase.messaging();
 
-  // IDs of divs that display registration token UI or request permission UI.
+
+  // デバイストークンまたはリクエスト許可を表示する <div> のID
   const tokenDivId = 'token_div';
   const permissionDivId = 'permission_div';
 
-  // Handle incoming messages. Called when:
-  // - a message is received while the app has focus
-  // - the user clicks on an app notification created by a service worker
-  //   `messaging.onBackgroundMessage` handler.
+
+  // 受信メッセージを処理
   messaging.onMessage((payload) => {
     console.log('Message received. ', payload);
-    // Update the UI to include the received message.
+    // 受信したメッセージを含めるように UI を更新
     appendMessage(payload);
   });
 
+
+  // service workerの登録、購読(SDKが裏でやってくれている)、デバイストークンの取得、デバイストークンをアプリケーションサーバへ送信
   function resetUI() {
     clearMessages();
     showToken('loading...');
-    // Get registration token. Initially this makes a network call, once retrieved
-    // subsequent calls to getToken will return from cache.
+    // デバイストークンを取得、2回目以降の getToken 呼び出しはキャッシュから返される
+    // Firebaseによるトークンの取得はPushSubscription（Push API）によるエンドポイントとは異なり、ブラウザに依存しないユーザー単位でのユニークなIDを取得する
     messaging.getToken({vapidKey: 'BELZS0sFRLC7RTxEOxSM2Z9ta44mkgIz0c0RVRNQQHk3mmMmNB2-RYy5JXvUJYsB3wXxlrYX6tzd5yNU8nlKn9Q'}).then((currentToken) => {
       if (currentToken) {
         sendTokenToServer(currentToken);
@@ -130,15 +129,14 @@ firebase.initializeApp({
   }
 
 
+  // コンソールとUIにトークンを表示
   function showToken(currentToken) {
-    // Show token in console and UI.
     const tokenElement = document.querySelector('#token');
     tokenElement.textContent = currentToken;
   }
 
-  // Send the registration token your application server, so that it can:
-  // - send messages back to this app
-  // - subscribe/unsubscribe the token from topics
+
+  // アプリケーションサーバにデバイストークンを送信する(中身はまだ書いていないので機能していない)、既にサービスワーカーが登録されている場合には動作しない
   function sendTokenToServer(currentToken) {
     if (!isTokenSentToServer()) {
       console.log('Sending token to server...');
@@ -150,23 +148,33 @@ firebase.initializeApp({
     }
   }
 
+
+  // ブラウザに保存した値を取得 getItem(Key)
   function isTokenSentToServer() {
     return window.localStorage.getItem('sentToServer') === '1';
   }
 
+
+  // ブラウザに値を保存 setItem(Key,value)
   function setTokenSentToServer(sent) {
     window.localStorage.setItem('sentToServer', sent ? '1' : '0');
   }
 
+
+  // 指定した要素のプロパティを visible,noneに変更
   function showHideDiv(divId, show) {
+    // cssセレクタを検索
     const div = document.querySelector('#' + divId);
     if (show) {
+      // 表示
       div.style = 'display: visible';
     } else {
+      // 非表示
       div.style = 'display: none';
     }
   }
 
+  // safari以外の通知許可
   function requestPermission() {
     console.log('Requesting permission...');
     Notification.requestPermission().then((permission) => {
@@ -182,6 +190,30 @@ firebase.initializeApp({
     });
   }
 
+
+  // 通知を許可しますか？の表示
+  function askNotificationPermission() {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      console.log("This browser does not support notifications.");
+    } else {
+      if (checkNotificationPromise()) {
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+            resetUI();
+          }
+        });
+      } else {
+        Notification.requestPermission(function (permission) {
+          resetUI();
+        });
+      }
+    }
+  }
+
+
+  // 表示しているデバイストークンを更新
   function deleteToken() {
     // Delete registration token.
     messaging.getToken().then((currentToken) => {
@@ -199,7 +231,8 @@ firebase.initializeApp({
     });
   }
 
-  // Add a message to the messages element.
+
+  // 送信されたメッセージをページ内に表示
   function appendMessage(payload) {
     const messagesElement = document.querySelector('#messages');
     const dataHeaderElement = document.createElement('h5');
@@ -211,7 +244,8 @@ firebase.initializeApp({
     messagesElement.appendChild(dataElement);
   }
 
-  // Clear the messages element of all children.
+
+  // メッセージ要素の部分をクリア
   function clearMessages() {
     const messagesElement = document.querySelector('#messages');
     while (messagesElement.hasChildNodes()) {
@@ -219,16 +253,26 @@ firebase.initializeApp({
     }
   }
 
+
+  // UIを更新する
   function updateUIForPushEnabled(currentToken) {
+    // デバイストークン要素を表示に切り替える
     showHideDiv(tokenDivId, true);
+    // 通知許可要素を非表示に切り替える
     showHideDiv(permissionDivId, false);
+    // デバイストークンを表示
     showToken(currentToken);
   }
 
+
+  // UIを更新する
   function updateUIForPushPermissionRequired() {
+    // デバイストークン要素を非表示に切り替える
     showHideDiv(tokenDivId, false);
+    // 通知許可要素を非表示に切り替える
     showHideDiv(permissionDivId, true);
   }
+
 
   resetUI();
 </script>
