@@ -59,6 +59,8 @@ limitations under the License.
             <p id="token"></p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     onclick="askNotificationPermission()">Request Permission</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    onclick="testMessage()">test</button>
           </div>
           <!-- div to display messages received by this app. -->
           <div id="messages"></div>
@@ -210,10 +212,10 @@ firebase.initializeApp({
       } else {
         Notification.requestPermission(function (permission) {
           if (permission === 'granted') {
-            console.log('Notification permission granted.');
+            console.log('Notification permission granted (safari).');
             resetUI();
           }else {
-            console.log('Unable to get permission to notify.');
+            console.log('Unable to get permission to notify (safari).');
             testMessage();
           }
         });
@@ -268,7 +270,7 @@ firebase.initializeApp({
     const testMessagesElement = document.querySelector('#test_call');
     const testDataElement = document.createElement('pre');
     testDataElement.style = 'overflow-x:hidden;';
-    testDataElement.textContent = "だめですね";
+    testDataElement.textContent = "test or safari のpush通知許可失敗";
     testMessagesElement.appendChild(testDataElement);
   }
 
