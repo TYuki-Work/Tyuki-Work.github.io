@@ -107,7 +107,7 @@ firebase.initializeApp({
   });
 
 
-  // service workerの登録、購読(SDKが裏でやってくれている)、デバイストークンの取得、デバイストークンをアプリケーションサーバへ送信
+  // （service workerの登録、購読はSDKが裏でやってくれている)、デバイストークンの取得、デバイストークンをアプリケーションサーバへ送信
   function resetUI() {
     clearMessages();
     showToken('loading...');
@@ -177,24 +177,9 @@ firebase.initializeApp({
     }
   }
 
-  // safari以外の通知許可(ここは使ってない)
-  function requestPermission() {
-    console.log('Requesting permission...');
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-        // TODO(developer): Retrieve a registration token for use with FCM.
-        // In many cases once an app has been granted notification permission,
-        // it should update its UI reflecting this.
-        resetUI();
-      } else {
-        console.log('Unable to get permission to notify.');
-      }
-    });
-  }
 
 
-  // 通知を許可しますか？の表示
+  // 通知を許可しますか？
   function askNotificationPermission() {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
@@ -205,18 +190,21 @@ firebase.initializeApp({
           if (permission === 'granted') {
             console.log('Notification permission granted.');
             resetUI();
+            testMessage("not safari granted")
           }else {
             console.log('Unable to get permission to notify.');
-          }
+            testMessage("not safari NG")
+         }
         });
       } else {
         Notification.requestPermission(function (permission) {
           if (permission === 'granted') {
             console.log('Notification permission granted (safari).');
             resetUI();
+            testMessage("safari granted")
           }else {
             console.log('Unable to get permission to notify (safari).');
-            testMessage();
+            testMessage("safari NG")
           }
         });
       }
@@ -266,11 +254,11 @@ firebase.initializeApp({
   }
 
   // test メッセージ表示用
-  function testMessage() {
+  function testMessage(text) {
     const testMessagesElement = document.querySelector('#test_call');
     const testDataElement = document.createElement('pre');
     testDataElement.style = 'overflow-x:hidden;';
-    testDataElement.textContent = "test or safari のpush通知許可失敗";
+    testDataElement.textContent = text;
     testMessagesElement.appendChild(testDataElement);
   }
 
