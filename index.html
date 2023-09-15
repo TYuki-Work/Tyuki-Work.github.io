@@ -174,7 +174,7 @@ firebase.initializeApp({
     }
   }
 
-  // safari以外の通知許可
+  // safari以外の通知許可(ここは使ってない)
   function requestPermission() {
     console.log('Requesting permission...');
     Notification.requestPermission().then((permission) => {
@@ -210,6 +210,16 @@ firebase.initializeApp({
         });
       }
     }
+  }
+
+  function checkNotificationPromise() {
+    try {
+      Notification.requestPermission().then();
+    } catch (e) {
+      return false;
+    }
+
+    return true;
   }
 
 
