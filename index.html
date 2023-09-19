@@ -189,18 +189,17 @@ function askNotificationPermission() {
   // Let's check if the browser supports notifications
   if (!("Notification" in window)) {
     console.log("This browser does not support notifications.");
-  //} else {
-  //   Notification.requestPermission(function(permission){
-  //     if (permission === 'granted') {
-  //       console.log('Notification permission granted.');
-  //       resetUI();
-  //       testMessage("not safari granted")
-  //     }else {
-  //       console.log('Unable to get permission to notify.');
-  //       testMessage("not safari NG")
-  //     }
-  //   });
-  // }
+  } else {
+    Notification.requestPermission(function(permission){
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        resetUI();
+        testMessage("Notification permission not granted")
+      }else {
+        console.log('Unable to get permission to notify.');
+        testMessage("Push permission NG")
+      }
+    });
   }
 }
 
