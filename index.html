@@ -240,7 +240,7 @@ function deleteToken() {
     
     messaging.deleteToken(currentToken).then(() => {
       console.log('Token deleted.');
-      setTokenSentToServer(false);
+      //setTokenSentToServer(false);
       // Once token is deleted update UI.
       resetUI();
 
