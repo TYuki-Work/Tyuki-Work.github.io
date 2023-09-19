@@ -37,12 +37,14 @@ const messaging = firebase.messaging();
 
 
 messaging.onMessage(function(payload){
-  const notificationTitle = 'Foreground Message Title';
-  const notificationOptions = {
-    body: 'foreground Message',
-    icon: '/firebase-logo.png'
+  const title = 'プッシュ通知のテスト';
+  const options = {
+    body: payload, // サーバーからのメッセージ
+    tag: title, // タイトル
+    icon: '/firebase-logo.png', // アイコン
+    badge: '/firebase-logo.png' // アイコン
   };
-  self.registration.showNotification(notificationTitle,notificationOptions);
+  self.registration.showNotification(title, options);
 });
 
 
