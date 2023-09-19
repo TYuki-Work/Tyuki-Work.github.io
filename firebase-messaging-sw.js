@@ -23,20 +23,7 @@ firebase.initializeApp({
  // messages.
 const messaging = firebase.messaging();
 
-// self.addEventListener('push', function (event) {
-//   const title = 'プッシュ通知のテスト';
-//   const options = {
-//     body: event.data.text(), // サーバーからのメッセージ
-//     tag: title, // タイトル
-//     icon: '/firebase-logo.png', // アイコン
-//     badge: '/firebase-logo.png' // アイコン
-//   };
-
-//   event.waitUntil(self.registration.showNotification(title, options));
-// });
-
-
-messaging.onMessage(function(payload){
+self.addEventListener('push', function (event) {
   const title = 'プッシュ通知のテスト';
   const options = {
     body: event.data.text(), // サーバーからのメッセージ
@@ -44,8 +31,21 @@ messaging.onMessage(function(payload){
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
   };
-  self.registration.showNotification(title, options);
+
+  event.waitUntil(self.registration.showNotification(title, options));
 });
+
+
+// messaging.onMessage(function(payload){
+//   const title = 'プッシュ通知のテスト';
+//   const options = {
+//     body: event.data.text(), // サーバーからのメッセージ
+//     tag: title, // タイトル
+//     icon: '/firebase-logo.png', // アイコン
+//     badge: '/firebase-logo.png' // アイコン
+//   };
+//   self.registration.showNotification(title, options);
+// });
 
 
 
