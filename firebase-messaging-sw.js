@@ -50,15 +50,15 @@ const messaging = firebase.messaging();
 
 
 
-// messaging.onBackgroundMessage(function(payload){
-//   console.log('[firebase-messaging-sw.js] Received background message ', payload);
-//   const notificationTitle = 'Background Message Title';
-//   const notificationOptions = {
-//     body: 'Background Message',
-//     icon: '/firebase-logo.png'
-//   };
-//   self.registration.showNotification(notificationTitle,notificationOptions);
-// });
+messaging.onBackgroundMessage(function(payload){
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message',
+    icon: '/firebase-logo.png'
+  };
+  self.registration.showNotification(notificationTitle,notificationOptions);
+});
 
 
 self.addEventListener('notificationclick', function (event) {
