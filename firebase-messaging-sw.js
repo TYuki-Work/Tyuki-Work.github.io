@@ -23,7 +23,20 @@ firebase.initializeApp({
  // messages.
 const messaging = firebase.messaging();
 
-// self.addEventListener('push', function (event) {
+self.addEventListener('push', function (event) {
+  const title = 'プッシュ通知のテスト';
+  const options = {
+    body: event.data.text(), // サーバーからのメッセージ
+    tag: title, // タイトル
+    icon: '/firebase-logo.png', // アイコン
+    badge: '/firebase-logo.png' // アイコン
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+
+// messaging.onMessage(function(payload){
 //   const title = 'プッシュ通知のテスト';
 //   const options = {
 //     body: event.data.text(), // サーバーからのメッセージ
@@ -31,34 +44,21 @@ const messaging = firebase.messaging();
 //     icon: '/firebase-logo.png', // アイコン
 //     badge: '/firebase-logo.png' // アイコン
 //   };
-
-//   event.waitUntil(self.registration.showNotification(title, options));
+//   self.registration.showNotification(title, options);
 // });
 
 
-messaging.onMessage(function(payload){
-  const title = 'プッシュ通知のテスト';
-  const options = {
-    body: payload, // サーバーからのメッセージ
-    tag: title, // タイトル
-    icon: '/firebase-logo.png', // アイコン
-    badge: '/firebase-logo.png' // アイコン
-  };
-  self.registration.showNotification(title, options);
-});
 
 
-
-
-messaging.onBackgroundMessage(function(payload){
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  const notificationTitle = 'Background Message Title';
-  const notificationOptions = {
-    body: 'Background Message',
-    icon: '/firebase-logo.png'
-  };
-  self.registration.showNotification(notificationTitle,notificationOptions);
-});
+// messaging.onBackgroundMessage(function(payload){
+//   console.log('[firebase-messaging-sw.js] Received background message ', payload);
+//   const notificationTitle = 'Background Message Title';
+//   const notificationOptions = {
+//     body: 'Background Message',
+//     icon: '/firebase-logo.png'
+//   };
+//   self.registration.showNotification(notificationTitle,notificationOptions);
+// });
 
 
 self.addEventListener('notificationclick', function (event) {
