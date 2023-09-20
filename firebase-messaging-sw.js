@@ -33,6 +33,8 @@ messaging.onMessage(function(payload){
     badge: '/firebase-logo.png' // アイコン
   };
   self.registration.showNotification(title, options);
+}).catch((err) => {
+    console.log('onMessaging error', err);
 });
 
 
@@ -47,7 +49,10 @@ messaging.onBackgroundMessage(function(payload){
       badge: '/firebase-logo.png' // アイコン
     };
     self.registration.showNotification(title, options);
-  });
+  }).catch((err) => {
+    console.log('onBackgroundMessaging error', err);
+});
+
   
   
 // self.addEventListener('push', function (event) {
