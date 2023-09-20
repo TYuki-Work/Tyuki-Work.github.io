@@ -11,6 +11,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
 <html>
 <head>
   <meta charset=utf-8 />
@@ -49,9 +50,9 @@ limitations under the License.
             <div id="token_div" style="display: none;">
               <h4>Registration Token</h4>
               <p id="token" style="word-break: break-all;"></p>
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+<!--              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                       onclick="deleteToken()">Delete Token</button>
-            </div>
+-->            </div>
             <!-- div to display the UI to allow the request for permission to
                 notify the user. This is shown if the app has not yet been
                 granted permission to notify. -->
@@ -91,13 +92,16 @@ firebase.initializeApp({
 });
 
 
+
 // Firebase Messaging object を取得.
 const messaging = firebase.messaging();
+
 
 
 // デバイストークンまたはリクエスト許可を表示する <div> のID
 const tokenDivId = 'token_div';
 const permissionDivId = 'permission_div';
+
 
 
 // 受信メッセージを処理
@@ -106,6 +110,7 @@ messaging.onMessage((payload) => {
   // 受信したメッセージを含めるように UI を更新
   appendMessage(payload);
 });
+
 
 
   // UIをリセット
@@ -137,36 +142,13 @@ function resetUI() {
 }
 
 
+
 // コンソールとUIにトークンを表示
 function showToken(currentToken) {
   const tokenElement = document.querySelector('#token');
   tokenElement.textContent = currentToken;
 }
 
-
-// アプリケーションサーバにデバイストークンを送信する(中身はまだ書いていないので機能しない)、既にサービスワーカーが登録されている場合には動作しない
-// function sendTokenToServer(currentToken) {
-//   if (!isTokenSentToServer()) {
-//     console.log('Sending token to server...');
-//     // TODO(developer): Send the current token to your server.
-//     setTokenSentToServer(true);
-//   } else {
-//     console.log('Token already sent to server so won\'t send it again ' +
-//         'unless it changes');
-//   }
-// }
-
-
-// // ブラウザに保存した値を取得 getItem(Key)
-// function isTokenSentToServer() {
-//   return window.localStorage.getItem('sentToServer') === '1';
-// }
-
-
-// // ブラウザに値を保存 setItem(Key,value)
-// function setTokenSentToServer(sent) {
-//   window.localStorage.setItem('sentToServer', sent ? '1' : '0');
-// }
 
 
 // 指定した要素のプロパティを visible,noneに変更
@@ -184,75 +166,29 @@ function showHideDiv(divId, show) {
 
 
 
-// 通知を許可しますか？
+// 通知を許可を要求
 function askNotificationPermission() {
-  // Let's check if the browser supports notifications
+  // ブラウザがプッシュ通知に対応しているかを確認
   if (!("Notification" in window)) {
     console.log("This browser does not support notifications.");
+
   } else {
+    // 通知を許可を要求
     Notification.requestPermission(function(permission){
+      
       if (permission === 'granted') {
         console.log('Notification permission granted.');
+        testMessage("Notification permission granted")
         resetUI();
-        testMessage("Notification permission not granted")
+
       }else {
         console.log('Unable to get permission to notify.');
-        testMessage("Push permission NG")
+        testMessage("Push permission not granted")
       }
     });
   }
 }
 
-// 要らないかもしれない部分
-//     if (checkNotificationPromise()) {
-//     }
-//     } else {
-//       Notification.requestPermission(function (permission) {
-//         if (permission === 'granted') {
-//           console.log('Notification permission granted (safari).');
-//           resetUI();
-//           testMessage("safari granted")
-//         }else {
-//           console.log('Unable to get permission to notify (safari).');
-//           testMessage("safari NG")
-//         }
-//       });
-//     }
-//   }
-// }
-
-// // requestPermission() プロミスの機能検出
-// function checkNotificationPromise() {
-//   try {
-//     Notification.requestPermission().then((permission)=>{});
-//   } catch (e) {
-//     testMessage("checkPermission NG")
-//     return false;
-//   }
-//   return true;
-// }
-
-
-// 表示しているデバイストークンを更新
-function deleteToken() {
-  // Delete registration token.
-  messaging.getToken().then((currentToken) => {
-    
-    messaging.deleteToken(currentToken).then(() => {
-      console.log('Token deleted.');
-      //setTokenSentToServer(false);
-      // Once token is deleted update UI.
-      resetUI();
-
-    }).catch((err) => {
-      console.log('Unable to delete token. ', err);
-    });
-
-  }).catch((err) => {
-    console.log('Error retrieving registration token. ', err);
-    showToken('Error retrieving registration token. ', err);
-  });
-}
 
 
 // 送信されたメッセージをページ内に表示
@@ -267,6 +203,8 @@ function appendMessage(payload) {
   messagesElement.appendChild(dataElement);
 }
 
+
+
 // test メッセージ表示用
 function testMessage(text) {
   const testMessagesElement = document.querySelector('#test_call');
@@ -277,6 +215,7 @@ function testMessage(text) {
 }
 
 
+
 // メッセージ要素の部分をクリア
 function clearMessages() {
   const messagesElement = document.querySelector('#messages');
@@ -284,6 +223,7 @@ function clearMessages() {
     messagesElement.removeChild(messagesElement.lastChild);
   }
 }
+
 
 
 // UIを更新する
@@ -297,6 +237,7 @@ function updateUIForPushEnabled(currentToken) {
 }
 
 
+
 // UIを更新する
 function updateUIForPushPermissionRequired() {
   // デバイストークン要素を非表示に切り替える
@@ -304,6 +245,50 @@ function updateUIForPushPermissionRequired() {
   // 通知許可要素を非表示に切り替える
   showHideDiv(permissionDivId, true);
 }
+
+
+
+// アプリケーションサーバにデバイストークンを送信する(中身はまだ書いていないので機能しない)、既にサービスワーカーが登録されている場合には動作しない
+// function sendTokenToServer(currentToken) {
+//   if (!isTokenSentToServer()) {
+//     console.log('Sending token to server...');
+//     // TODO(developer): Send the current token to your server.
+//     setTokenSentToServer(true);
+//   } else {
+//     console.log('Token already sent to server so won\'t send it again ' +
+//         'unless it changes');
+//   }
+// }
+// // ブラウザに保存した値を取得 getItem(Key)
+// function isTokenSentToServer() {
+//   return window.localStorage.getItem('sentToServer') === '1';
+// }
+// // ブラウザに値を保存 setItem(Key,value)
+// function setTokenSentToServer(sent) {
+//   window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+// }
+
+
+
+// // 表示しているデバイストークンを更新
+// function deleteToken() {
+//   // Delete registration token.
+//   messaging.getToken().then((currentToken) => {
+//     messaging.deleteToken(currentToken).then(() => {
+//       console.log('Token deleted.');
+//       setTokenSentToServer(false);
+//       // Once token is deleted update UI.
+//       resetUI();
+//     }).catch((err) => {
+//       console.log('Unable to delete token. ', err);
+//     });
+//   }).catch((err) => {
+//     console.log('Error retrieving registration token. ', err);
+//     showToken('Error retrieving registration token. ', err);
+//   });
+// }
+
+
 
 resetUI();
 </script>
