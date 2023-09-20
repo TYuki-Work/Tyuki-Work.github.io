@@ -105,7 +105,7 @@ const permissionDivId = 'permission_div';
 
 
 // 受信メッセージを処理
-messaging.onMessage((payload) => {
+messaging.onMessage(function(payload){
   console.log('Message received. ', payload);
   // 受信したメッセージを含めるように UI を更新
   appendMessage(payload);
