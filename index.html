@@ -105,12 +105,11 @@ const permissionDivId = 'permission_div';
 
 
 // 受信メッセージを処理
-messaging.onMessage(function(payload){
+messaging.onMessage((payload) => {
   console.log('Message received. ', payload);
   // 受信したペイロードをページ上に表示
   appendMessage(payload);
 });
-
 
 
 // UIをリセット
