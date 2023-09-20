@@ -178,12 +178,12 @@ function askNotificationPermission() {
       
       if (permission === 'granted') {
         console.log('Notification permission granted.');
-        testMessage("Notification permission granted")
+        testMessage("Notification permission granted");
         resetUI();
 
       }else {
         console.log('Unable to get permission to notify.');
-        testMessage("Push permission not granted")
+        testMessage("Push permission not granted");
       }
     });
   }
