@@ -126,9 +126,8 @@ function resetUI() {
       updateUIForPushEnabled(currentToken);
 
     } else {
-      // Show permission request.
       console.log('No registration token available. Request permission to generate one.');
-      // Show permission UI.
+      // UIを変更.
       updateUIForPushPermissionRequired();
       //setTokenSentToServer(false);
     }
@@ -289,7 +288,7 @@ function updateUIForPushPermissionRequired() {
 
 
 
-resetUI();
+//resetUI();
 </script>
 </body>
 </html>
