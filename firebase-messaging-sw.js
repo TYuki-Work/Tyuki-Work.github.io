@@ -25,32 +25,28 @@ const messaging = firebase.messaging();
 
 
 messaging.onMessage(function(payload){
-  const title = 'プッシュ通知のテスト';
-  const options = {
-    body: payload, // サーバーからのメッセージ
-    tag: title, // タイトル
-    icon: '/firebase-logo.png', // アイコン
-    badge: '/firebase-logo.png' // アイコン
-  };
-  self.registration.showNotification(title, options);
-}).catch((err) => {
-    console.log('onMessaging error', err);
+    const title = 'フォアグラウンド通知';
+    const options = {
+        body: payload, // サーバーからのメッセージ
+        tag: title, // タイトル
+        icon: '/firebase-logo.png', // アイコン
+        badge: '/firebase-logo.png' // アイコン
+    };
+    self.registration.showNotification(title, options);
 });
 
 
 
 
 messaging.onBackgroundMessage(function(payload){
-    const title = 'プッシュ通知のテスト';
+    const title = 'バックグラウンド通知';
     const options = {
-      body: payload, // サーバーからのメッセージ
-      tag: title, // タイトル
-      icon: '/firebase-logo.png', // アイコン
-      badge: '/firebase-logo.png' // アイコン
+        body: payload, // サーバーからのメッセージ
+        tag: title, // タイトル
+        icon: '/firebase-logo.png', // アイコン
+        badge: '/firebase-logo.png' // アイコン
     };
     self.registration.showNotification(title, options);
-  }).catch((err) => {
-    console.log('onBackgroundMessaging error', err);
 });
 
   
