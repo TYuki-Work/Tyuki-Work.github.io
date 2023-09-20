@@ -214,10 +214,6 @@ function testMessage(text) {
 }
 
 
-
-// 
-
-
 // UIを更新する
 function updateUIForPushEnabled(currentToken) {
   // デバイストークン要素を表示に切り替える
@@ -251,10 +247,12 @@ function updateUIForPushPermissionRequired() {
 //         'unless it changes');
 //   }
 // }
+
 // // ブラウザに保存した値を取得 getItem(Key)
 // function isTokenSentToServer() {
 //   return window.localStorage.getItem('sentToServer') === '1';
 // }
+
 // // ブラウザに値を保存 setItem(Key,value)
 // function setTokenSentToServer(sent) {
 //   window.localStorage.setItem('sentToServer', sent ? '1' : '0');
@@ -278,10 +276,9 @@ function updateUIForPushPermissionRequired() {
 //     console.log('Error retrieving registration token. ', err);
 //     showToken('Error retrieving registration token. ', err);
 //   });
-
-
-
 // }
+
+
 // メッセージ要素の部分をクリア
 // function clearMessages() {
 //   const messagesElement = document.querySelector('#messages');
