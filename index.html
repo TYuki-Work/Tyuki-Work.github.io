@@ -113,9 +113,9 @@ messaging.onMessage(function(payload){
 
 
 
-  // UIをリセット
+// UIをリセット
 function resetUI() {
-  clearMessages();
+//  clearMessages();
   showToken('loading...');
 
   // （通知がオフになっている場合は通知の許可）、service workerの登録、購読、デバイストークンを取得（2回目以降の getToken 呼び出しはキャッシュから返される）
@@ -216,14 +216,7 @@ function testMessage(text) {
 
 
 
-// メッセージ要素の部分をクリア
-function clearMessages() {
-  const messagesElement = document.querySelector('#messages');
-  while (messagesElement.hasChildNodes()) {
-    messagesElement.removeChild(messagesElement.lastChild);
-  }
-}
-
+// 
 
 
 // UIを更新する
@@ -286,6 +279,16 @@ function updateUIForPushPermissionRequired() {
 //     console.log('Error retrieving registration token. ', err);
 //     showToken('Error retrieving registration token. ', err);
 //   });
+
+
+
+// }
+// メッセージ要素の部分をクリア
+// function clearMessages() {
+//   const messagesElement = document.querySelector('#messages');
+//   while (messagesElement.hasChildNodes()) {
+//     messagesElement.removeChild(messagesElement.lastChild);
+//   }
 // }
 
 
