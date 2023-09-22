@@ -77,7 +77,7 @@ limitations under the License.
 
 
 <script>
-//初期化
+//インスタンス初期化
 testMessage("1");
 
 firebase.initializeApp({
@@ -111,13 +111,15 @@ testMessage("4");
 //   appendMessage(payload);
 // });
 
+let registration_obj;
 
 // swの登録を行う
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(function (registration) {
     if (typeof registration.update == 'function') {
-        resistration_obj = registration
-        registration.update();
+      registration_obj = registration
+      registration.update();
+      console.log("sw updated")
     }
     testMessage("sw登録完了")
   })
@@ -156,7 +158,7 @@ function getSubscribe() {
 //  clearMessages();
   //showToken('loading...');
   // （通知がオフになっている場合は通知の許可）、（service workerの登録）、購読、デバイストークンを取得（2回目以降の getToken 呼び出しはキャッシュから返される）
-  messaging.getToken({serviceWorkerRegistration: 'sw.js', vapidKey: 'BELZS0sFRLC7RTxEOxSM2Z9ta44mkgIz0c0RVRNQQHk3mmMmNB2-RYy5JXvUJYsB3wXxlrYX6tzd5yNU8nlKn9Q'}).then((currentToken) => {
+  messaging.getToken({serviceWorkerRegistration: registration_obj, vapidKey: 'BELZS0sFRLC7RTxEOxSM2Z9ta44mkgIz0c0RVRNQQHk3mmMmNB2-RYy5JXvUJYsB3wXxlrYX6tzd5yNU8nlKn9Q'}).then((currentToken) => {
   testMessage("5");
 
     if (currentToken) {
