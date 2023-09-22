@@ -114,7 +114,7 @@ testMessage("4");
 
 // swの登録を行う
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js',{ scope: "/" }).then(function (registration) {
+  navigator.serviceWorker.register('/sw.js').then(function (registration) {
     if (typeof registration.update == 'function') {
         registration.update();
     }
