@@ -112,13 +112,27 @@ testMessage("4");
 // });
 
 
+// swの登録を行う
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js',{ scope: "/" }).then(function (registration) {
+    if (typeof registration.update == 'function') {
+        registration.update();
+    }
+    testMessage("sw登録完了")
+  })
+  .catch(function (error) {
+    console.log("Error Log: " + error);
+  });
+}
+
+
 // UIをリセット
 function resetUI() {
 //  clearMessages();
   //showToken('loading...');
-  testMessage("5");
-  // （通知がオフになっている場合は通知の許可）、service workerの登録、購読、デバイストークンを取得（2回目以降の getToken 呼び出しはキャッシュから返される）
+  // （通知がオフになっている場合は通知の許可）、（service workerの登録）、購読、デバイストークンを取得（2回目以降の getToken 呼び出しはキャッシュから返される）
   messaging.getToken({vapidKey: 'BELZS0sFRLC7RTxEOxSM2Z9ta44mkgIz0c0RVRNQQHk3mmMmNB2-RYy5JXvUJYsB3wXxlrYX6tzd5yNU8nlKn9Q'}).then((currentToken) => {
+  testMessage("5");
 
     if (currentToken) {
       //sendTokenToServer(currentToken);
