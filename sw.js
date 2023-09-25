@@ -18,7 +18,7 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('push', function (event) {
   console.log("push event")
   console.log(event)
-  const title = 'プッシュ通知のテスト';
+  const title = 'プッシュ通知';
   const options = {
     body: event.data.text(), // サーバーからのメッセージ
     tag: title, // タイトル
