@@ -1,12 +1,12 @@
 
 self.addEventListener('install', () => {
   console.log("installed");
-  e.waitUntil(self.skipWaiting());
 });
 
 
 self.addEventListener('activate', (e) => {
   console.log("activated");
+  e.waitUntil(self.clients.claim());
 });
 
 
