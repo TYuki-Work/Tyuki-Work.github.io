@@ -120,7 +120,7 @@ self.addEventListener('load',(event) => {
       if (typeof registration.update == 'function') {
         registration_obj = registration
         registration.update();
-        console.log("sw updated")
+        console.log("sw updating")
       }
       testMessage("sw登録完了")
     })
