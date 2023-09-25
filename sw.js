@@ -8,8 +8,8 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
   console.log("activated");
-  //e.waitUntil(self.clients.claim());
-  //console.log("activated claim");
+  e.waitUntil(self.clients.claim());
+  console.log("activated claim");
 });
 
 
