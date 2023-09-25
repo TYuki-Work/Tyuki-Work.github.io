@@ -8,8 +8,9 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
   console.log("activated");
-  e.waitUntil(self.clients.claim());
-  console.log("activated claim");
+//  今回はプッシュ通知のみなのでいらない
+//  e.waitUntil(self.clients.claim());
+//  console.log("activated claim");
 });
 
 
