@@ -1,8 +1,8 @@
 
 self.addEventListener('install', (e) => {
   console.log("installed");
-//  e.waitUntil(self.skipWaiting());
-//  console.log("installed skip waiting");
+e.waitUntil(self.skipWaiting());
+console.log("installed skip waiting");
 });
 
 
