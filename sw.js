@@ -18,6 +18,7 @@ self.addEventListener('push', function (event) {
     body: event.data.text(), // サーバーからのメッセージ
     tag: title, // タイトル
     icon: '/firebase-logo.png', // アイコン
+    badge: '/firebase-logo.png' // アイコン
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
