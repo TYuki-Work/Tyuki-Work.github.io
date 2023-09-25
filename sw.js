@@ -8,6 +8,7 @@ console.log("installed skip waiting");
 
 self.addEventListener('activate', (e) => {
   console.log("activated");
+  console.log("not controll");
 //  e.waitUntil(self.clients.claim());
 //  console.log("activated claim");
 });
