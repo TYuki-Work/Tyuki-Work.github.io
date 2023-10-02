@@ -179,6 +179,7 @@ function getSubscribe() {
   }).catch((err) => {
     console.log('An error occurred while retrieving token. ', err);
     //showToken('Error retrieving registration token. ', err);
+    testMessage(err);
     testMessage("8");
     //setTokenSentToServer(false);
   });
