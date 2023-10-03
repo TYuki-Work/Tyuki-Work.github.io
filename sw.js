@@ -37,7 +37,9 @@
 //   );
 // });
 
-importScripts("https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js");
+
+
+import {initializeApp} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
 
 firebase.initializeApp({
   apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
@@ -60,14 +62,12 @@ messaging.onMessage(function(payload) {
     icon: '/firebase-logo.png', // アイコン
     click_action: 'index.html' // 飛び先URL
   };
-
   if (!("Notification" in window)) {
-      // ブラウザが通知機能に対応しているかを判定
   } else if (Notification.permission === "granted") {
-      // 通知許可されていたら通知する
       var notification = new Notification(notificationTitle,notificationOptions);
   }
 });
+
 
 // バックグラウンドでのプッシュ通知受信
 messaging.onBackgroundMessage(function(payload) {
@@ -78,7 +78,5 @@ messaging.onBackgroundMessage(function(payload) {
           body: payload.notification.body, // 本文
           icon: payload.notification.icon, // アイコン
   };
-
-  return self.registration.showNotification(notificationTitle,
-  notificationOptions);
+  return self.registration.showNotification(notificationTitle,notificationOptions);
 });
