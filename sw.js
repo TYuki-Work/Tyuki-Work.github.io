@@ -57,8 +57,8 @@ messaging.onMessage(function(payload) {
   var notificationTitle = payload.data.title; // タイトル
   var notificationOptions = {
     body: payload.data.body, // 本文
-    icon: '/pwa_512.png', // アイコン
-    click_action: 'https://xxxx.sample.com/' // 飛び先URL
+    icon: '/firebase-logo.png', // アイコン
+    click_action: 'index.html' // 飛び先URL
   };
 
   if (!("Notification" in window)) {
@@ -71,7 +71,7 @@ messaging.onMessage(function(payload) {
 
 // バックグラウンドでのプッシュ通知受信
 messaging.onBackgroundMessage(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  console.log('Received background message ', payload);
   // Customize notification here
   var notificationTitle = payload.notification.title; // タイトル
   var notificationOptions = {
