@@ -39,7 +39,8 @@
 
 
 
-import {initializeApp} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
+importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js')
+importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js')
 
 firebase.initializeApp({
   apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
