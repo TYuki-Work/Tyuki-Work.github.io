@@ -43,7 +43,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebas
 import { getMessaging, onMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
 import { onBackgroundMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-sw.js";
 
-initializeApp({
+app = initializeApp({
   apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
   authDomain: 'pushtest01-ded5f.firebaseapp.com',
   databaseURL: 'https://pushtest01-ded5f.firebaseio.com',
@@ -54,7 +54,7 @@ initializeApp({
   measurementId: 'G-0CLQF7L3E2',
 });
 
-const messaging = getMessaging();
+const messaging = getMessaging(app);
 
 // フォアグラウンドでのプッシュ通知受信
 onMessage(messaging,(payload) => {
