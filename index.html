@@ -80,6 +80,7 @@ limitations under the License.
 //インスタンス初期化
 testMessage("1");
 
+//awaitつけないとエラー？
 firebase.initializeApp({
   apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
   authDomain: 'pushtest01-ded5f.firebaseapp.com',
@@ -116,7 +117,7 @@ let registration_obj;
 // swの登録を行う
 self.addEventListener('load',(event) => {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then(function (registration) {
+    navigator.serviceWorker.register('sw.js','module').then(function (registration) {
       if (typeof registration.update == 'function') {
         registration_obj = registration
         registration.update();
