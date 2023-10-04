@@ -39,13 +39,12 @@
 
 
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import {
-  initializeApp,
+  getMessaging,
   onMessage,
-  onBackgroundMessage,
-  getMessaging
+  onBackgroundMessage
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
-
 
 initializeApp({
   apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
@@ -61,7 +60,7 @@ initializeApp({
 const messaging = getMessaging();
 
 // フォアグラウンドでのプッシュ通知受信
-messaging.onMessage(function(payload) {
+onMessage(messaging,(payload) => {
   var notificationTitle = payload.data.title; // タイトル
   var notificationOptions = {
     body: payload.data.body, // 本文
@@ -76,13 +75,14 @@ messaging.onMessage(function(payload) {
 
 
 // バックグラウンドでのプッシュ通知受信
-messaging.onBackgroundMessage(function(payload) {
+onBackgroundMessage(messaging,(payload) => {
   console.log('Received background message ', payload);
   // Customize notification here
   var notificationTitle = payload.notification.title; // タイトル
   var notificationOptions = {
           body: payload.notification.body, // 本文
           icon: payload.notification.icon, // アイコン
+          click_action: 'index.html' // 飛び先URL
   };
   return self.registration.showNotification(notificationTitle,notificationOptions);
 });
