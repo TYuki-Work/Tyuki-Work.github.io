@@ -43,44 +43,47 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebas
 import { getMessaging, onMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
 import { onBackgroundMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-sw.js";
 
-const firebaseConfig = ({
-  apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
-  authDomain: 'pushtest01-ded5f.firebaseapp.com',
-  databaseURL: 'https://pushtest01-ded5f.firebaseio.com',
-  projectId: 'pushtest01-ded5f',
-  storageBucket: 'pushtest01-ded5f.appspot.com',
-  messagingSenderId: '71015566445',
-  appId: '1:71015566445:web:3e17509a6268d959124364',
-  measurementId: 'G-0CLQF7L3E2',
-});
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+document.addEventListener("DOMContentLoaded", function () {
+  const firebaseConfig = ({
+    apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
+    authDomain: 'pushtest01-ded5f.firebaseapp.com',
+    databaseURL: 'https://pushtest01-ded5f.firebaseio.com',
+    projectId: 'pushtest01-ded5f',
+    storageBucket: 'pushtest01-ded5f.appspot.com',
+    messagingSenderId: '71015566445',
+    appId: '1:71015566445:web:3e17509a6268d959124364',
+    measurementId: 'G-0CLQF7L3E2',
+  });
 
-// フォアグラウンドでのプッシュ通知受信
-onMessage(messaging,(payload) => {
-  var notificationTitle = payload.data.title; // タイトル
-  var notificationOptions = {
-    body: payload.data.body, // 本文
-    icon: '/firebase-logo.png', // アイコン
-    click_action: 'index.html' // 飛び先URL
-  };
-  if (!("Notification" in window)) {
-  } else if (Notification.permission === "granted") {
-      var notification = new Notification(notificationTitle,notificationOptions);
-  }
-});
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  // フォアグラウンドでのプッシュ通知受信
+  onMessage(messaging,(payload) => {
+    var notificationTitle = payload.data.title; // タイトル
+    var notificationOptions = {
+      body: payload.data.body, // 本文
+      icon: '/firebase-logo.png', // アイコン
+      click_action: 'index.html' // 飛び先URL
+    };
+    if (!("Notification" in window)) {
+    } else if (Notification.permission === "granted") {
+        var notification = new Notification(notificationTitle,notificationOptions);
+    }
+  });
 
 
-// バックグラウンドでのプッシュ通知受信
-onBackgroundMessage(messaging,(payload) => {
-  console.log('Received background message ', payload);
-  // Customize notification here
-  var notificationTitle = payload.notification.title; // タイトル
-  var notificationOptions = {
-          body: payload.notification.body, // 本文
-          icon: payload.notification.icon, // アイコン
-          click_action: 'index.html' // 飛び先URL
-  };
-  return self.registration.showNotification(notificationTitle,notificationOptions);
+  // バックグラウンドでのプッシュ通知受信
+  onBackgroundMessage(messaging,(payload) => {
+    console.log('Received background message ', payload);
+    // Customize notification here
+    var notificationTitle = payload.notification.title; // タイトル
+    var notificationOptions = {
+            body: payload.notification.body, // 本文
+            icon: payload.notification.icon, // アイコン
+            click_action: 'index.html' // 飛び先URL
+    };
+    return self.registration.showNotification(notificationTitle,notificationOptions);
+  });
 });
