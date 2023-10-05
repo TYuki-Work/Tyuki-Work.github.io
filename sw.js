@@ -16,9 +16,7 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('push', function (event) {
   console.log("push event")
   console.log(event)
-
-  pushData = JSON.parse(event.data)
-
+  
   const options = {
     body: 'タップしてが確認ください', // サーバーからのメッセージ
     tag: '掲示板に更新がありました', // タイトル
