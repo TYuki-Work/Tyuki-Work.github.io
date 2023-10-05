@@ -16,11 +16,10 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('push', function (event) {
   console.log("push event")
   console.log(event)
-  console.log(event.data)
-  const title = 'プッシュ通知のテスト';
+
   const options = {
-    body: event.data.text(), // サーバーからのメッセージ
-    tag: title, // タイトル
+    body: event.body, // サーバーからのメッセージ
+    tag: event.title, // タイトル
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
   };
