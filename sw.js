@@ -17,9 +17,11 @@ self.addEventListener('push', function (event) {
   console.log("push event")
   console.log(event)
 
+  pushData = JSON.parse(event.data)
+
   const options = {
-    body: event.body, // サーバーからのメッセージ
-    tag: event.title, // タイトル
+    body: pushData["notification"]["body"], // サーバーからのメッセージ
+    tag: pushData["notification"]["title"], // タイトル
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
   };
