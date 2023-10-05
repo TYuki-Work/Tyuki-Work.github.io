@@ -17,10 +17,10 @@ self.addEventListener('push', function (event) {
   console.log("push event")
   console.log(event)
 
-  const title = 'タップしてご確認ください';
+  const title = '掲示板に更新がありました';
   const options = {
-    body: title, // サーバーからのメッセージ
-    tag: '掲示板に更新がありました', // タイトル
+    body: 'タップしてご確認ください', // サーバーからのメッセージ
+    tag: title, // タイトル
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
   };
