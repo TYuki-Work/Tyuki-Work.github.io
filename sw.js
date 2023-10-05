@@ -49,8 +49,8 @@
 // });
 
 
-import("https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js");
-import("https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js");
 
 firebase.initializeApp({
   apiKey: 'AIzaSyDNtLQ9ZbAtRj1IrN8XyP-y5jH9L5aYu0w',
