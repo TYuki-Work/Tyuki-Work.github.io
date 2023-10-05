@@ -109,7 +109,7 @@ testMessage("4");
 messaging.onMessage((payload) => {
   console.log('Message received. ', payload);
   // 受信したペイロードをページ上に表示
-  testMessage(payload);
+  testMessage(JSON.stringify(payload, null, 2));
 });
 
 let registration_obj;
