@@ -16,9 +16,10 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('push', function (event) {
   console.log("push event")
   console.log(event)
-  
+
+  const title = 'タップしてご確認ください';
   const options = {
-    body: 'タップしてが確認ください', // サーバーからのメッセージ
+    body: title, // サーバーからのメッセージ
     tag: '掲示板に更新がありました', // タイトル
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
