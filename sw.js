@@ -20,8 +20,8 @@ self.addEventListener('push', function (event) {
   pushData = JSON.parse(event.data)
 
   const options = {
-    body: pushData["notification"]["body"], // サーバーからのメッセージ
-    tag: pushData["notification"]["title"], // タイトル
+    body: 'タップしてが確認ください', // サーバーからのメッセージ
+    tag: '掲示板に更新がありました', // タイトル
     icon: '/firebase-logo.png', // アイコン
     badge: '/firebase-logo.png' // アイコン
   };
