@@ -118,7 +118,7 @@ let registration_obj;
 // swの登録を行う
 self.addEventListener('load',(event) => {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register({'sw.js': module}).then(function (registration) {
+    navigator.serviceWorker.register('sw.js', 'module').then(function (registration) {
       if (typeof registration.update == 'function') {
         registration_obj = registration
         registration.update();
