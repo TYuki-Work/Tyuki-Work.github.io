@@ -30,10 +30,8 @@ self.addEventListener("DOMContentLoaded", function () {
       icon: '/firebase-logo.png', // アイコン
       click_action: 'index.html' // 飛び先URL
     };
-    
-    if (Notification.permission === "granted") {
-        var notification = new Notification(Title,Options);
-    }
+
+    self.registration.showNotification(Title,Options);
   });
 
 
