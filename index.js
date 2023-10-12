@@ -39,7 +39,6 @@ testMessage("4");
 
 let registration_obj;
 
-
 self.addEventListener('load',(event) => {
     if ('serviceWorker' in navigator) {
 
@@ -86,7 +85,7 @@ self.addEventListener('load',(event) => {
 
 
 // 通知を許可を要求
-function askNotificationPermission() {
+export function askNotificationPermission() {
   // ブラウザがプッシュ通知に対応しているかを確認
   if (!("Notification" in window)) {
     console.log("This browser does not support notifications.");
